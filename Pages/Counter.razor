@@ -1,0 +1,44 @@
+﻿@page "/counter"
+@using Syncfusion.Blazor.Inputs
+@using System.ComponentModel.DataAnnotations
+
+<h1>Counter</h1>
+
+<EditForm Model="@m_ModelValue">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    @foreach (var field in FieldIdentifiers)
+    {
+        @field.Key
+        @CreateComponent(field.Key, field.Value);
+        <br />
+    }
+    <button type="submit">Submit</button>
+</EditForm>
+
+
+@code {
+    [Parameter] public User m_ModelValue { get; set; } = new User();
+    [Parameter] public Dictionary<string, string> FieldIdentifiers { get; set; } = new Dictionary<string, string> { { "FirstName", "string" }, { "Id", "int" } };
+    public RenderFragment CreateComponent(string fld, string component) => builder =>
+    {
+        if (component == "string")
+        {
+            builder.OpenComponent(0, typeof(SfTextBox));
+        }
+        if (component == "int")
+        {
+            builder.OpenComponent(0, typeof(SfNumericTextBox<int?>));
+        }
+        builder.CloseComponent();
+    };
+
+    public class User
+    {
+        [Required]
+        public string FirstName { get; set; }
+        [Required]
+        public int? Id { get; set; }
+    }
+
+}
