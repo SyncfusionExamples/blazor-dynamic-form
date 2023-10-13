@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Syncfusion.Blazor.Inputs;
 
-namespace FormBuilder.Data
+namespace DynamicFormBuilderSample.Data
 {
     public class EmployeeDetails
     {

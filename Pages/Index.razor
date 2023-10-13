@@ -1,5 +1,5 @@
 ﻿@page "/"
-@using FormBuilder.Data
+@using DynamicFormBuilderSample.Data
 @using Microsoft.AspNetCore.Components.CompilerServices
 @using System.ComponentModel.DataAnnotations
 @using Syncfusion.Blazor.Inputs
@@ -33,10 +33,10 @@
             {
                 var attrList = (DataTypeAttribute)prp.GetCustomAttributes(typeof(DataTypeAttribute), false).First();
                 var displayLabel = (DisplayAttribute)prp.GetCustomAttributes(typeof(DisplayAttribute), false).First();
-            // Get the initial property value
-            var propInfoValue = typeof(EmployeeDetails).GetProperty(prp.Name);
-            // Create an expression to set the ValueExpression-attribute.
-            var constant = System.Linq.Expressions.Expression.Constant(employeeDetails, typeof(EmployeeDetails));
+                // Get the initial property value
+                var propInfoValue = typeof(EmployeeDetails).GetProperty(prp.Name);
+                // Create an expression to set the ValueExpression-attribute.
+                var constant = System.Linq.Expressions.Expression.Constant(employeeDetails, typeof(EmployeeDetails));
                 var exp = System.Linq.Expressions.MemberExpression.Property(constant, prp.Name);
                 switch (attrList.DataType)
                 {
@@ -46,8 +46,8 @@
                     case DataType.MultilineText:
                         {
                             builder.OpenComponent(0, typeof(SfTextBox));
-                        // Create the handler for ValueChanged. I use reflection to the value.
-                        builder.AddAttribute(3, "ValueChanged", RuntimeHelpers.TypeCheck<Microsoft.AspNetCore.Components.EventCallback<System.String>>(Microsoft.AspNetCore.Components.EventCallback.Factory.Create<System.String>(this, Microsoft.AspNetCore.Components.EventCallback.Factory.CreateInferred(this, __value => propInfoValue.SetValue(employeeDetails, __value), (string)propInfoValue.GetValue(employeeDetails)))));
+                            // Create the handler for ValueChanged. I use reflection to the value.
+                            builder.AddAttribute(3, "ValueChanged", RuntimeHelpers.TypeCheck<Microsoft.AspNetCore.Components.EventCallback<System.String>>(Microsoft.AspNetCore.Components.EventCallback.Factory.Create<System.String>(this, Microsoft.AspNetCore.Components.EventCallback.Factory.CreateInferred(this, __value => propInfoValue.SetValue(employeeDetails, __value), (string)propInfoValue.GetValue(employeeDetails)))));
                             builder.AddAttribute(4, "ValueExpression", System.Linq.Expressions.Expression.Lambda<Func<string>>(exp));
                             if (attrList.DataType == DataType.MultilineText)
                                 builder.AddAttribute(5, "Multiline", true);
