@@ -1,44 +1,18 @@
 ﻿@page "/counter"
-@using Syncfusion.Blazor.Inputs
-@using System.ComponentModel.DataAnnotations
+
+<PageTitle>Counter</PageTitle>
 
 <h1>Counter</h1>
 
-<EditForm Model="@m_ModelValue">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-    @foreach (var field in FieldIdentifiers)
-    {
-        @field.Key
-        @CreateComponent(field.Key, field.Value);
-        <br />
-    }
-    <button type="submit">Submit</button>
-</EditForm>
+<p role="status">Current count: @currentCount</p>
 
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
 @code {
-    [Parameter] public User m_ModelValue { get; set; } = new User();
-    [Parameter] public Dictionary<string, string> FieldIdentifiers { get; set; } = new Dictionary<string, string> { { "FirstName", "string" }, { "Id", "int" } };
-    public RenderFragment CreateComponent(string fld, string component) => builder =>
-    {
-        if (component == "string")
-        {
-            builder.OpenComponent(0, typeof(SfTextBox));
-        }
-        if (component == "int")
-        {
-            builder.OpenComponent(0, typeof(SfNumericTextBox<int?>));
-        }
-        builder.CloseComponent();
-    };
+    private int currentCount = 0;
 
-    public class User
+    private void IncrementCount()
     {
-        [Required]
-        public string FirstName { get; set; }
-        [Required]
-        public int? Id { get; set; }
+        currentCount++;
     }
-
 }
